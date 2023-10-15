@@ -1,0 +1,45 @@
+@startuml
+
+interface ResourceManagementStrategy {
+  +allocateResource(): int
+  +freeResource(resourceId: int): void
+  +markSlotFree(resourceId: int): void
+  +markSlotBusy(resourceId: int): void
+  +findFreeSlot(): int
+}
+
+class TimeSlotManagementStrategy {
+  +allocateResource(): int
+  +freeResource(resourceId: int): void
+  +markSlotFree(resourceId: int): void
+  +markSlotBusy(resourceId: int): void
+  +findFreeSlot(): int
+}
+
+class SpaceSlotManagementStrategy {
+  +allocateResource(): int
+  +freeResource(resourceId: int): void
+  +markSlotFree(resourceId: int): void
+  +markSlotBusy(resourceId: int): void
+  +findFreeSlot(): int
+}
+
+enum ResourceType {
+  TIME_SLOT
+  SPACE_SLOT
+}
+
+class ResourceAllocator {
+  -INVALID_RESOURCE_ID: int
+  -strategy: ResourceManagementStrategy
+  +ResourceAllocator(strategy: ResourceManagementStrategy)
+  +allocate(resourceType: ResourceType): int
+  +free(resourceType: ResourceType, resourceId: int): void
+}
+
+ResourceAllocator --> ResourceManagementStrategy
+TimeSlotManagementStrategy --|> ResourceManagementStrategy
+SpaceSlotManagementStrategy --|> ResourceManagementStrategy
+ResourceAllocator --> ResourceType
+
+@enduml
